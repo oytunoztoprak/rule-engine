@@ -1,6 +1,6 @@
 package com.primavera.ruleengine;
 
-import com.primavera.ruleengine.model.DummyUbrOutput;
+import com.primavera.ruleengine.model.AccumulatorAction;
 import com.primavera.ruleengine.model.Ubr;
 import com.primavera.ruleengine.ruleEngine.impl.AccumulatorInferenceEngine;
 import com.primavera.ruleengine.ruleEngine.RuleEngine;
@@ -37,9 +37,8 @@ public class RuleEngineApplication implements CommandLineRunner {
         } else {
             System.out.println("Matched " + results.size() + " rule(s)");
             results.forEach( result -> {
-                DummyUbrOutput dummyUbrOutput = (DummyUbrOutput) result;
-
-                System.out.println("Key:" + dummyUbrOutput.getKey() + " Scope:" + dummyUbrOutput.getScope() + " Amount Type:" + dummyUbrOutput.getAmountType());
+                AccumulatorAction accumulatorAction = (AccumulatorAction) result;
+                System.out.println(accumulatorAction.toString());
 
             });
 

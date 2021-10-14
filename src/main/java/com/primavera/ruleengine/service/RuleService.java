@@ -33,9 +33,6 @@ public class RuleService {
                 .action(ruleDbModel.getAction())
                 .description(ruleDbModel.getDescription())
                 .priority(ruleDbModel.getPriority())
-                .key((ruleDbModel.getKey()))
-                .amountType(ruleDbModel.getAmountType())
-                .scope(ruleDbModel.getScope())
                 .build();
     }
 }

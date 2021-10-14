@@ -2,9 +2,7 @@ package com.primavera.ruleengine.ruleEngine;
 
 
 import com.primavera.ruleengine.RuleNamespace;
-import com.primavera.ruleengine.model.DummyUbrOutput;
 import com.primavera.ruleengine.model.Rule;
-import com.primavera.ruleengine.model.Ubr;
 import com.primavera.ruleengine.util.parser.RuleParser;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

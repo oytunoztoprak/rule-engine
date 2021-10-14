@@ -26,11 +26,5 @@ public class RuleDbModel {
     private Integer priority;
     @Column(name = "description")
     private String description;
-    @Column(name = "key")
-    private String key;
-    @Column(name = "scope")
-    private String scope;
-    @Column(name = "amount_type")
-    private String amountType;
 }
 

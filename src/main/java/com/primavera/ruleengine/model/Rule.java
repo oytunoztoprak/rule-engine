@@ -14,8 +14,5 @@ public class Rule {
     private String condition;
     private String action;
     private Integer priority;
-    private String key;
-    private String scope;
-    private String amountType;
     private String description;
 }
