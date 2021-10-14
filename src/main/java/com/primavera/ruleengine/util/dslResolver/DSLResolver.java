@@ -1,4 +1,4 @@
-package com.primavera.ruleengine.dslResolver;
+package com.primavera.ruleengine.util.dslResolver;
 
 public interface DSLResolver {
     String getResolverKeyword();

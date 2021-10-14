@@ -1,7 +1,7 @@
-package com.primavera.ruleengine.parser;
+package com.primavera.ruleengine.util.parser;
 
-import com.primavera.ruleengine.dslResolver.DSLKeywordResolver;
-import com.primavera.ruleengine.dslResolver.DSLResolver;
+import com.primavera.ruleengine.util.dslResolver.DSLKeywordResolver;
+import com.primavera.ruleengine.util.dslResolver.DSLResolver;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

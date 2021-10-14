@@ -1,4 +1,4 @@
-package com.primavera.ruleengine.parser;
+package com.primavera.ruleengine.util.parser;
 
 import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;

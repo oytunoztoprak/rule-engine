@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class KnowledgeBaseService {
+public class RuleService {
     @Autowired
     private RulesRepository rulesRepository;
 
@@ -35,6 +35,9 @@ public class KnowledgeBaseService {
                 .action(ruleDbModel.getAction())
                 .description(ruleDbModel.getDescription())
                 .priority(ruleDbModel.getPriority())
+                .key((ruleDbModel.getKey()))
+                .amountType(ruleDbModel.getAmountType())
+                .scope(ruleDbModel.getScope())
                 .build();
     }
 }

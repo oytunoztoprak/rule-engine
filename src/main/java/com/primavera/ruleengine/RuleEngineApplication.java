@@ -2,7 +2,7 @@ package com.primavera.ruleengine;
 
 import com.primavera.ruleengine.model.DummyUbrOutput;
 import com.primavera.ruleengine.model.Ubr;
-import com.primavera.ruleengine.rulesImpl.AccumulatorInferenceEngine;
+import com.primavera.ruleengine.ruleEngine.impl.AccumulatorInferenceEngine;
 import com.primavera.ruleengine.ruleEngine.RuleEngine;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -27,12 +27,14 @@ public class RuleEngineApplication implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         Ubr ubr = new Ubr();
-        ubr.setRecordType("USG");
+        ubr.setRecordType("MON");
         DummyUbrOutput result = (DummyUbrOutput) ruleEngine.run(accumulatorInferenceEngine, ubr);
         if (null == result) {
             System.out.println("Matched no rules");
         } else {
-            System.out.println("result:" + result);
+            System.out.println("Matched Key: " + result.getKey());
+            System.out.println("Matched Scope: " + result.getScope());
+            System.out.println("Matched Amount Type: " + result.getAmountType());
         }
     }
 

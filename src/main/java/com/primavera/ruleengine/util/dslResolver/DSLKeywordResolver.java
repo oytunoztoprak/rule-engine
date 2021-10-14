@@ -1,4 +1,4 @@
-package com.primavera.ruleengine.dslResolver;
+package com.primavera.ruleengine.util.dslResolver;
 
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

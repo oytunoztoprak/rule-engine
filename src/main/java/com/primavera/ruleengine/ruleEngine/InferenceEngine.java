@@ -3,7 +3,7 @@ package com.primavera.ruleengine.ruleEngine;
 
 import com.primavera.ruleengine.RuleNamespace;
 import com.primavera.ruleengine.model.Rule;
-import com.primavera.ruleengine.parser.RuleParser;
+import com.primavera.ruleengine.util.parser.RuleParser;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -58,6 +58,7 @@ public abstract class InferenceEngine<INPUT_DATA, OUTPUT_RESULT> {
      * @return
      */
     protected List<Rule> match(List<Rule> listOfRules, INPUT_DATA inputData){
+
         return listOfRules.stream()
                 .filter(
                         rule -> {
@@ -83,10 +84,7 @@ public abstract class InferenceEngine<INPUT_DATA, OUTPUT_RESULT> {
     protected Rule resolve(List<Rule> conflictSet){
         Optional<Rule> rule = conflictSet.stream()
                 .findFirst();
-        if (rule.isPresent()){
-            return rule.get();
-        }
-        return null;
+        return rule.orElse(null);
     }
 
     /**
@@ -96,10 +94,10 @@ public abstract class InferenceEngine<INPUT_DATA, OUTPUT_RESULT> {
      * @return
      */
     protected OUTPUT_RESULT executeRule(Rule rule, INPUT_DATA inputData){
-        OUTPUT_RESULT outputResult = initializeOutputResult();
+        OUTPUT_RESULT outputResult = initializeOutputResult(rule);
         return ruleParser.parseAction(rule.getAction(), inputData, outputResult);
     }
 
-    protected abstract OUTPUT_RESULT initializeOutputResult();
+    protected abstract OUTPUT_RESULT initializeOutputResult(Rule rule);
     protected abstract RuleNamespace getRuleNamespace();
 }

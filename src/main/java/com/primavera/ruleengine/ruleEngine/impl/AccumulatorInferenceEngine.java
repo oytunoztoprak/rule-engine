@@ -1,7 +1,8 @@
-package com.primavera.ruleengine.rulesImpl;
+package com.primavera.ruleengine.ruleEngine.impl;
 
 import com.primavera.ruleengine.RuleNamespace;
 import com.primavera.ruleengine.model.DummyUbrOutput;
+import com.primavera.ruleengine.model.Rule;
 import com.primavera.ruleengine.model.Ubr;
 import com.primavera.ruleengine.ruleEngine.InferenceEngine;
 import lombok.extern.slf4j.Slf4j;
@@ -20,7 +21,11 @@ public class AccumulatorInferenceEngine extends InferenceEngine<Ubr, DummyUbrOut
     }
 
     @Override
-    protected DummyUbrOutput initializeOutputResult() {
-        return DummyUbrOutput.builder().build();
+    protected DummyUbrOutput initializeOutputResult(Rule rule) {
+        DummyUbrOutput dummyUbrOutput = new DummyUbrOutput();
+        dummyUbrOutput.setAmountType(rule.getAmountType());
+        dummyUbrOutput.setKey(rule.getKey());
+        dummyUbrOutput.setScope(rule.getScope());
+        return dummyUbrOutput;
     }
 }
