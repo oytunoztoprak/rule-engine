@@ -2,13 +2,14 @@ package com.primavera.ruleengine.util.parser;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
 
 @Slf4j
-@Service
+@Component
 public class RuleParser<INPUT_DATA, OUTPUT_RESULT> {
 
     @Autowired

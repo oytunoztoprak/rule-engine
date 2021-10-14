@@ -18,9 +18,7 @@ public class RuleService {
     public List<Rule> getAllRuleByNamespace(String ruleNamespace) {
         List<RuleDbModel> ruleSet = rulesRepository.findByRuleNamespace(ruleNamespace);
         return ruleSet.stream()
-                .map(
-                        ruleDbModel -> mapFromDbModel(ruleDbModel)
-                )
+                .map(this::mapFromDbModel)
                 .collect(Collectors.toList());
 
     }

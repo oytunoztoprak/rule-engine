@@ -2,12 +2,15 @@ package com.primavera.ruleengine.ruleEngine;
 
 
 import com.primavera.ruleengine.RuleNamespace;
+import com.primavera.ruleengine.model.DummyUbrOutput;
 import com.primavera.ruleengine.model.Rule;
+import com.primavera.ruleengine.model.Ubr;
 import com.primavera.ruleengine.util.parser.RuleParser;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -19,85 +22,60 @@ public abstract class InferenceEngine<INPUT_DATA, OUTPUT_RESULT> {
     @Autowired
     private RuleParser<INPUT_DATA, OUTPUT_RESULT> ruleParser;
 
-    /**
-     * Run inference engine on set of rules for given data.
-     * @param listOfRules
-     * @param inputData
-     * @return
-     */
-    public OUTPUT_RESULT run (List<Rule> listOfRules, INPUT_DATA inputData){
-        if (null == listOfRules || listOfRules.isEmpty()){
+
+    protected List<OUTPUT_RESULT> run(List<Rule> listOfRules, INPUT_DATA inputData, boolean matchMultipleRules) {
+
+
+        if (null == listOfRules || listOfRules.isEmpty()) {
             return null;//TODO maybe return some other code
         }
 
         //STEP 1 (MATCH) : Match the facts and data against the set of rules.
-        List<Rule> conflictSet = match(listOfRules, inputData);
+        List<Rule> matchedRules = match(listOfRules, inputData,matchMultipleRules); //TODO: Make this configurable at rule
 
-        //STEP 2 (RESOLVE) : Resolve the conflict and give the selected one rule.
-        Rule resolvedRule = resolve(conflictSet);
-        if (null == resolvedRule){
-            return null;
-        }
+        //STEP 2 (EXECUTE) : Run the action of the selected rule on given data and return the output.
 
-        //STEP 3 (EXECUTE) : Run the action of the selected rule on given data and return the output.
-        OUTPUT_RESULT outputResult = executeRule(resolvedRule, inputData);
-
-        return outputResult;
-    }
-
-    /**
-     *We can use here any pattern matching algo:
-     * 1. Rete
-     * 2. Linear
-     * 3. Treat
-     * 4. Leaps
-     *
-     * Here we are using Linear matching algorithm for pattern matching.
-     * @param listOfRules
-     * @param inputData
-     * @return
-     */
-    protected List<Rule> match(List<Rule> listOfRules, INPUT_DATA inputData){
-
-        return listOfRules.stream()
-                .filter(
-                        rule -> {
-                            String condition = rule.getCondition();
-                            return ruleParser.parseCondition(condition, inputData);
-                        }
-                )
+        return matchedRules.stream()
+                .map(rule -> executeRule(rule, inputData))
                 .collect(Collectors.toList());
     }
 
-    /**
-     * We can use here any resolving techniques:
-     * 1. Lex
-     * 2. Recency
-     * 3. MEA
-     * 4. Refactor
-     * 5. Priority wise
-     *
-     *  Here we are using find first rule logic.
-     * @param conflictSet
-     * @return
-     */
-    protected Rule resolve(List<Rule> conflictSet){
-        Optional<Rule> rule = conflictSet.stream()
-                .findFirst();
-        return rule.orElse(null);
+    protected List<Rule> match(List<Rule> listOfRules, INPUT_DATA inputData, boolean matchMultipleRules) {
+
+        List<Rule> matchedRules = new ArrayList<>();
+        if (matchMultipleRules) {
+
+            matchedRules = listOfRules.stream()
+                    .filter(
+                            rule -> {
+                                String condition = rule.getCondition();
+                                return ruleParser.parseCondition(condition, inputData);
+                            }
+                    )
+                    .collect(Collectors.toList());
+        } else {
+            Optional<Rule> matchedRule = listOfRules.stream()
+                    .filter(
+                            rule -> {
+                                String condition = rule.getCondition();
+                                return ruleParser.parseCondition(condition, inputData);
+                            }
+                    )
+                    .findFirst();
+            matchedRule.ifPresent(matchedRules::add);
+
+        }
+        return matchedRules;
+
     }
 
-    /**
-     * Execute selected rule on input data.
-     * @param rule
-     * @param inputData
-     * @return
-     */
-    protected OUTPUT_RESULT executeRule(Rule rule, INPUT_DATA inputData){
+
+    protected OUTPUT_RESULT executeRule(Rule rule, INPUT_DATA inputData) {
         OUTPUT_RESULT outputResult = initializeOutputResult(rule);
         return ruleParser.parseAction(rule.getAction(), inputData, outputResult);
     }
 
     protected abstract OUTPUT_RESULT initializeOutputResult(Rule rule);
+
     protected abstract RuleNamespace getRuleNamespace();
 }

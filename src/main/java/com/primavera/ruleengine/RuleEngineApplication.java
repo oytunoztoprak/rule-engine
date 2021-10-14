@@ -4,9 +4,12 @@ import com.primavera.ruleengine.model.DummyUbrOutput;
 import com.primavera.ruleengine.model.Ubr;
 import com.primavera.ruleengine.ruleEngine.impl.AccumulatorInferenceEngine;
 import com.primavera.ruleengine.ruleEngine.RuleEngine;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+import java.util.List;
 
 @SpringBootApplication
 public class RuleEngineApplication implements CommandLineRunner {
@@ -28,13 +31,18 @@ public class RuleEngineApplication implements CommandLineRunner {
     public void run(String... args) throws Exception {
         Ubr ubr = new Ubr();
         ubr.setRecordType("MON");
-        DummyUbrOutput result = (DummyUbrOutput) ruleEngine.run(accumulatorInferenceEngine, ubr);
-        if (null == result) {
+        List<Object> results = ruleEngine.run(accumulatorInferenceEngine, ubr);
+        if (CollectionUtils.isEmpty(results)) {
             System.out.println("Matched no rules");
         } else {
-            System.out.println("Matched Key: " + result.getKey());
-            System.out.println("Matched Scope: " + result.getScope());
-            System.out.println("Matched Amount Type: " + result.getAmountType());
+            System.out.println("Matched " + results.size() + " rule(s)");
+            results.forEach( result -> {
+                DummyUbrOutput dummyUbrOutput = (DummyUbrOutput) result;
+
+                System.out.println("Key:" + dummyUbrOutput.getKey() + " Scope:" + dummyUbrOutput.getScope() + " Amount Type:" + dummyUbrOutput.getAmountType());
+
+            });
+
         }
     }
 
