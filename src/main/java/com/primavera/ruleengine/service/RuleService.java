@@ -17,4 +17,9 @@ public class RuleService {
     public List<Rule> getAllRuleByNamespace(String ruleNamespace) {
         return rulesRepository.findByRuleNamespace(ruleNamespace);
     }
+
+    @Cacheable("rules")
+    public List<Rule> getAllRules() {
+        return rulesRepository.findAll();
+    }
 }

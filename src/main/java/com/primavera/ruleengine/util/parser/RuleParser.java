@@ -17,8 +17,8 @@ public class RuleParser<INPUT_DATA, OUTPUT_RESULT> {
     @Autowired
     protected MVELParser mvelParser;
 
-    private final String INPUT_KEYWORD = "input"; //TODO Find a workaround to remove it
-    private final String OUTPUT_KEYWORD = "output"; //TODO Find a workaround to remove it
+    private final String INPUT_KEYWORD = "input";
+    private final String OUTPUT_KEYWORD = "output";
 
     /**
      * Parsing in given priority/steps.

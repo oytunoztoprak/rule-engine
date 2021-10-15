@@ -1,5 +1,6 @@
-package com.primavera.ruleengine.model.tmp;
+package com.primavera.ruleengine.model;
 
+import com.primavera.ruleengine.model.Account;
 import lombok.Getter;
 import lombok.Setter;
 

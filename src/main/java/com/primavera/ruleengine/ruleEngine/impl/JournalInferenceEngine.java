@@ -3,7 +3,7 @@ package com.primavera.ruleengine.ruleEngine.impl;
 import com.primavera.ruleengine.RuleMatchStrategyEnum;
 import com.primavera.ruleengine.model.AccumulatorAction;
 import com.primavera.ruleengine.model.Rule;
-import com.primavera.ruleengine.model.tmp.Ubr;
+import com.primavera.ruleengine.model.Ubr;
 import com.primavera.ruleengine.ruleEngine.BaseInferenceEngine;
 
 public class JournalInferenceEngine<INPUT_DATA, OUTPUT_RESULT> extends BaseInferenceEngine<Ubr, AccumulatorAction> {

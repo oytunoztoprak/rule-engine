@@ -1,4 +1,4 @@
-package com.primavera.ruleengine.model.tmp;
+package com.primavera.ruleengine.model;
 
 import lombok.Getter;
 import lombok.Setter;
