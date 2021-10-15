@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Service
-public abstract class InferenceEngine<INPUT_DATA, OUTPUT_RESULT> {
+public abstract class BaseInferenceEngine<INPUT_DATA, OUTPUT_RESULT> {
 
     @Autowired
     private RuleParser<INPUT_DATA, OUTPUT_RESULT> ruleParser;

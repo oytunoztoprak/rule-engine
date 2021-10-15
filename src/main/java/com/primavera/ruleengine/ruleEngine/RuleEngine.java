@@ -11,16 +11,23 @@ import java.util.List;
 
 @Slf4j
 @Service
-public class RuleEngine {
+public class RuleEngine<T> {
 
     @Autowired
     private RuleService ruleService;
 
-    public List<Object> run(InferenceEngine inferenceEngine, Object inputData) {
+    public List<Object> run(BaseInferenceEngine inferenceEngine, Object inputData) {
         RuleNamespace ruleNamespace = inferenceEngine.getRuleNamespace();
-        //TODO:  Rules should be cached
+        //TODO:  PostConstruct load all rules to cache
         List<Rule> allRulesByNamespace = ruleService.getAllRuleByNamespace(ruleNamespace.toString());
         return inferenceEngine.run(allRulesByNamespace, inputData,ruleNamespace.matchMultipleRules);
     }
+
+/*    public List<T> run( inferenceEngine, Object inputData) {
+
+
+        List<Rule> allRulesByNamespace = ruleService.getAllRuleByNamespace(ruleNamespace.toString());
+        return inferenceEngine.run(allRulesByNamespace, inputData,ruleNamespace.matchMultipleRules);
+    }*/
 
 }

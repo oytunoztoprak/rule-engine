@@ -1,7 +1,7 @@
 package com.primavera.ruleengine;
 
 import com.primavera.ruleengine.model.AccumulatorAction;
-import com.primavera.ruleengine.model.Ubr;
+import com.primavera.ruleengine.model.tmp.Ubr;
 import com.primavera.ruleengine.ruleEngine.impl.AccumulatorInferenceEngine;
 import com.primavera.ruleengine.ruleEngine.RuleEngine;
 import org.apache.commons.collections4.CollectionUtils;

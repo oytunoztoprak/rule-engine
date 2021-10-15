@@ -1,4 +1,4 @@
 package com.primavera.ruleengine.ruleEngine.impl;
 
-public class JournalNetInferenceEngine {
+public class JournalInferenceEngine {
 }
