@@ -1,9 +1,10 @@
 package com.primavera.ruleengine.ruleEngine;
 
 
-import com.primavera.ruleengine.RuleNamespace;
+import com.primavera.ruleengine.RuleMatchStrategyEnum;
 import com.primavera.ruleengine.model.Rule;
 import com.primavera.ruleengine.util.parser.RuleParser;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,13 +16,14 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Service
+@Getter
 public abstract class BaseInferenceEngine<INPUT_DATA, OUTPUT_RESULT> {
 
     @Autowired
     private RuleParser<INPUT_DATA, OUTPUT_RESULT> ruleParser;
 
 
-    protected List<OUTPUT_RESULT> run(List<Rule> listOfRules, INPUT_DATA inputData, boolean matchMultipleRules) {
+    protected List<OUTPUT_RESULT> run(List<Rule> listOfRules, RuleMatchStrategyEnum ruleMatchStrategy, INPUT_DATA inputData) {
 
 
         if (null == listOfRules || listOfRules.isEmpty()) {
@@ -29,7 +31,7 @@ public abstract class BaseInferenceEngine<INPUT_DATA, OUTPUT_RESULT> {
         }
 
         //STEP 1 (MATCH) : Match the facts and data against the set of rules.
-        List<Rule> matchedRules = match(listOfRules, inputData,matchMultipleRules); //TODO: Make this configurable at rule
+        List<Rule> matchedRules = match(listOfRules, inputData, ruleMatchStrategy); //TODO: Make this configurable at rule
 
         //STEP 2 (EXECUTE) : Run the action of the selected rule on given data and return the output.
 
@@ -38,33 +40,34 @@ public abstract class BaseInferenceEngine<INPUT_DATA, OUTPUT_RESULT> {
                 .collect(Collectors.toList());
     }
 
-    protected List<Rule> match(List<Rule> listOfRules, INPUT_DATA inputData, boolean matchMultipleRules) {
+    protected List<Rule> match(List<Rule> listOfRules, INPUT_DATA inputData, RuleMatchStrategyEnum ruleMatchStrategyEnum) {
 
         List<Rule> matchedRules = new ArrayList<>();
-        if (matchMultipleRules) {
 
-            matchedRules = listOfRules.stream()
-                    .filter(
-                            rule -> {
-                                String condition = rule.getCondition();
-                                return ruleParser.parseCondition(condition, inputData);
-                            }
-                    )
-                    .collect(Collectors.toList());
-        } else {
-            Optional<Rule> matchedRule = listOfRules.stream()
-                    .filter(
-                            rule -> {
-                                String condition = rule.getCondition();
-                                return ruleParser.parseCondition(condition, inputData);
-                            }
-                    )
-                    .findFirst();
-            matchedRule.ifPresent(matchedRules::add);
+        switch (ruleMatchStrategyEnum) {
+            case MATCH_SINGLE_RULE:
+                Optional<Rule> matchedRule = listOfRules.stream()
+                        .filter(
+                                rule -> {
+                                    String condition = rule.getCondition();
+                                    return ruleParser.parseCondition(condition, inputData);
+                                }
+                        )
+                        .findFirst();
+                matchedRule.ifPresent(matchedRules::add);
+            case MATCH_MULTIPLE_RULES:
+                matchedRules = listOfRules.stream()
+                        .filter(
+                                rule -> {
+                                    String condition = rule.getCondition();
+                                    return ruleParser.parseCondition(condition, inputData);
+                                }
+                        )
+                        .collect(Collectors.toList());
+            default:
 
         }
         return matchedRules;
-
     }
 
 
@@ -75,5 +78,6 @@ public abstract class BaseInferenceEngine<INPUT_DATA, OUTPUT_RESULT> {
 
     protected abstract OUTPUT_RESULT initializeOutputResult(Rule rule);
 
-    protected abstract RuleNamespace getRuleNamespace();
+    protected abstract RuleMatchStrategyEnum getRuleMatchStrategy();
+
 }

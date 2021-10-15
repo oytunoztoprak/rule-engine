@@ -31,7 +31,9 @@ public class RuleEngineApplication implements CommandLineRunner {
     public void run(String... args) throws Exception {
         Ubr ubr = new Ubr();
         ubr.setRecordType("MON");
-        List<Object> results = ruleEngine.run(accumulatorInferenceEngine, ubr);
+        String ruleNamespace = "ACCUMULATOR_KEY";
+        List<Object> results = ruleEngine.run(accumulatorInferenceEngine, ruleNamespace, ubr);
+
         if (CollectionUtils.isEmpty(results)) {
             System.out.println("Matched no rules");
         } else {
