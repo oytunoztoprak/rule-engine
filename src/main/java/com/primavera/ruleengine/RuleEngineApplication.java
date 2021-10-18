@@ -2,8 +2,8 @@ package com.primavera.ruleengine;
 
 import com.primavera.ruleengine.model.AccumulatorAction;
 import com.primavera.ruleengine.model.Ubr;
-import com.primavera.ruleengine.ruleEngine.impl.AccumulatorInferenceEngine;
-import com.primavera.ruleengine.ruleEngine.RuleEngine;
+import com.primavera.ruleengine.ruleEngine.impl.AccumulatorRuleEngine;
+import com.primavera.ruleengine.ruleEngine.RuleEngineService;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -15,12 +15,12 @@ import java.util.List;
 public class RuleEngineApplication implements CommandLineRunner {
 
 
-    final AccumulatorInferenceEngine accumulatorInferenceEngine;
-    final RuleEngine ruleEngine;
+    final AccumulatorRuleEngine accumulatorRuleEngine;
+    final RuleEngineService ruleEngineService;
 
-    public RuleEngineApplication(AccumulatorInferenceEngine accumulatorInferenceEngine, RuleEngine ruleEngine) {
-        this.accumulatorInferenceEngine = accumulatorInferenceEngine;
-        this.ruleEngine = ruleEngine;
+    public RuleEngineApplication(AccumulatorRuleEngine accumulatorRuleEngine, RuleEngineService ruleEngineService) {
+        this.accumulatorRuleEngine = accumulatorRuleEngine;
+        this.ruleEngineService = ruleEngineService;
     }
 
     public static void main(String[] args) {
@@ -32,16 +32,15 @@ public class RuleEngineApplication implements CommandLineRunner {
         Ubr ubr = new Ubr();
         ubr.setRecordType("MON");
         String ruleNamespace = "ACCUMULATOR_KEY";
-        List<Object> results = ruleEngine.run(accumulatorInferenceEngine, ruleNamespace, ubr);
+        List<AccumulatorAction> results = ruleEngineService.execute(RuleEngineType.ACCUMULATOR, ruleNamespace, ubr);
+
 
         if (CollectionUtils.isEmpty(results)) {
             System.out.println("Matched no rules");
         } else {
             System.out.println("Matched " + results.size() + " rule(s)");
-            results.forEach( result -> {
-                AccumulatorAction accumulatorAction = (AccumulatorAction) result;
-                System.out.println(accumulatorAction.toString());
-
+            results.forEach(result -> {
+                System.out.println(result.toString());
             });
 
         }

@@ -4,9 +4,11 @@ import com.primavera.ruleengine.RuleMatchStrategyEnum;
 import com.primavera.ruleengine.model.AccumulatorAction;
 import com.primavera.ruleengine.model.Rule;
 import com.primavera.ruleengine.model.Ubr;
-import com.primavera.ruleengine.ruleEngine.BaseInferenceEngine;
+import com.primavera.ruleengine.ruleEngine.BaseRuleEngine;
+import org.springframework.stereotype.Component;
 
-public class JournalInferenceEngine<INPUT_DATA, OUTPUT_RESULT> extends BaseInferenceEngine<Ubr, AccumulatorAction> {
+@Component
+public class JournalRuleEngine<INPUT_DATA, OUTPUT_RESULT> extends BaseRuleEngine<Ubr, AccumulatorAction> {
 
 
     @Override

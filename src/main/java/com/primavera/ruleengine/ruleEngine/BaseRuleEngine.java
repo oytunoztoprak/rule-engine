@@ -7,6 +7,7 @@ import com.primavera.ruleengine.util.parser.RuleParser;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -15,9 +16,9 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
-@Service
+@Component
 @Getter
-public abstract class BaseInferenceEngine<INPUT_DATA, OUTPUT_RESULT> {
+public abstract class BaseRuleEngine<INPUT_DATA, OUTPUT_RESULT> {
 
     @Autowired
     private RuleParser<INPUT_DATA, OUTPUT_RESULT> ruleParser;
