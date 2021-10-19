@@ -10,10 +10,10 @@ import org.springframework.stereotype.Component;
 public class JournalRuleEngine extends BaseRuleEngine {
 
 
-    @Override
-    protected JournalAction initializeOutputResult(Rule rule) {
+/*    @Override
+    protected JournalAction initializeOutputResult() {
         return JournalAction.builder().build();
-    }
+    }*/
 
     @Override
     protected RuleMatchStrategyEnum getRuleMatchStrategy() {

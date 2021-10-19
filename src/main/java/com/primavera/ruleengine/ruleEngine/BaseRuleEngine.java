@@ -2,6 +2,7 @@ package com.primavera.ruleengine.ruleEngine;
 
 
 import com.primavera.ruleengine.RuleMatchStrategyEnum;
+import com.primavera.ruleengine.model.AccumulatorAction;
 import com.primavera.ruleengine.model.Rule;
 import com.primavera.ruleengine.util.parser.RuleParser;
 import lombok.Getter;
@@ -25,7 +26,7 @@ public abstract class BaseRuleEngine<INPUT_DATA, OUTPUT_RESULT> {
     private RuleParser<INPUT_DATA, OUTPUT_RESULT> ruleParser;
 
 
-    protected List<OUTPUT_RESULT> run(List<Rule> listOfRules, RuleMatchStrategyEnum ruleMatchStrategy, INPUT_DATA inputData) {
+    protected List<OUTPUT_RESULT> run(List<Rule> listOfRules, RuleMatchStrategyEnum ruleMatchStrategy, INPUT_DATA inputData,OUTPUT_RESULT outputResult) {
 
 
         if (null == listOfRules || listOfRules.isEmpty()) {
@@ -37,7 +38,7 @@ public abstract class BaseRuleEngine<INPUT_DATA, OUTPUT_RESULT> {
         //STEP 2 (EXECUTE) : Run the action of the selected rule on given data and return the output.
 
         return matchedRules.stream()
-                .map(rule -> executeRule(rule, inputData))
+                .map(rule -> executeRule(rule, inputData,outputResult))
                 .collect(Collectors.toList());
     }
 
@@ -72,12 +73,13 @@ public abstract class BaseRuleEngine<INPUT_DATA, OUTPUT_RESULT> {
     }
 
 
-    protected OUTPUT_RESULT executeRule(Rule rule, INPUT_DATA inputData) {
-        OUTPUT_RESULT outputResult = initializeOutputResult(rule);
-        return ruleParser.parseAction(rule.getAction(), inputData, outputResult);
+    protected OUTPUT_RESULT executeRule(Rule rule, INPUT_DATA inputData,OUTPUT_RESULT outputResult) {
+        return ruleParser.parseAction(rule.getAction(), inputData,  outputResult);
     }
 
-    protected abstract OUTPUT_RESULT initializeOutputResult(Rule rule);
+    /*protected abstract OUTPUT_RESULT initializeOutputResult() {
+
+    };*/
 
     protected abstract RuleMatchStrategyEnum getRuleMatchStrategy();
 

@@ -27,9 +27,10 @@ public class RuleEngineApplication implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         Ubr ubr = new Ubr();
-        ubr.setRecordType("GFT");
+        ubr.setRecordType("MON");
         String ruleNamespace = "ACCUMULATOR_KEY";
-        List<AccumulatorAction> results = ruleEngineService.execute(RuleDomain.ACCUMULATOR, ruleNamespace, ubr);
+        AccumulatorAction accumulatorAction = new AccumulatorAction();
+        List<AccumulatorAction> results = ruleEngineService.execute(RuleDomain.ACCUMULATOR, ruleNamespace, ubr,accumulatorAction);
 
 
         if (CollectionUtils.isEmpty(results)) {

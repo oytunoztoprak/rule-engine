@@ -14,12 +14,6 @@ import org.springframework.stereotype.Service;
 @Component
 public class AccumulatorRuleEngine extends BaseRuleEngine{
 
-
-    @Override
-    protected AccumulatorAction initializeOutputResult(Rule rule) {
-        return AccumulatorAction.builder().build();
-    }
-
     @Override
     protected RuleMatchStrategyEnum getRuleMatchStrategy() {
         return RuleMatchStrategyEnum.MATCH_MULTIPLE_RULES;
