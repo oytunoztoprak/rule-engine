@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -33,7 +34,6 @@ public abstract class BaseRuleEngine<INPUT_DATA, OUTPUT_RESULT> {
 
         //STEP 1 (MATCH) : Match the facts and data against the set of rules.
         List<Rule> matchedRules = match(listOfRules, inputData, ruleMatchStrategy); //TODO: Make this configurable at rule
-
         //STEP 2 (EXECUTE) : Run the action of the selected rule on given data and return the output.
 
         return matchedRules.stream()

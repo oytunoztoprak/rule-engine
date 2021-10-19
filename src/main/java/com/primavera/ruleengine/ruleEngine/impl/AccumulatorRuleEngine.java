@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 
 @Slf4j
 @Component
-public class AccumulatorRuleEngine<INPUT_DATA, OUTPUT_RESULT> extends BaseRuleEngine<Ubr, AccumulatorAction> {
+public class AccumulatorRuleEngine extends BaseRuleEngine{
 
 
     @Override

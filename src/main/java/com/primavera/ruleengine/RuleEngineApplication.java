@@ -2,7 +2,6 @@ package com.primavera.ruleengine;
 
 import com.primavera.ruleengine.model.AccumulatorAction;
 import com.primavera.ruleengine.model.Ubr;
-import com.primavera.ruleengine.ruleEngine.impl.AccumulatorRuleEngine;
 import com.primavera.ruleengine.ruleEngine.RuleEngineService;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.boot.CommandLineRunner;
@@ -15,11 +14,9 @@ import java.util.List;
 public class RuleEngineApplication implements CommandLineRunner {
 
 
-    final AccumulatorRuleEngine accumulatorRuleEngine;
     final RuleEngineService ruleEngineService;
 
-    public RuleEngineApplication(AccumulatorRuleEngine accumulatorRuleEngine, RuleEngineService ruleEngineService) {
-        this.accumulatorRuleEngine = accumulatorRuleEngine;
+    public RuleEngineApplication(RuleEngineService ruleEngineService) {
         this.ruleEngineService = ruleEngineService;
     }
 
@@ -30,9 +27,9 @@ public class RuleEngineApplication implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         Ubr ubr = new Ubr();
-        ubr.setRecordType("MON");
+        ubr.setRecordType("GFT");
         String ruleNamespace = "ACCUMULATOR_KEY";
-        List<AccumulatorAction> results = ruleEngineService.execute(RuleEngineType.ACCUMULATOR, ruleNamespace, ubr);
+        List<AccumulatorAction> results = ruleEngineService.execute(RuleDomain.ACCUMULATOR, ruleNamespace, ubr);
 
 
         if (CollectionUtils.isEmpty(results)) {
@@ -44,6 +41,7 @@ public class RuleEngineApplication implements CommandLineRunner {
             });
 
         }
+
     }
 
 }

@@ -16,6 +16,8 @@ public class Rule {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "rule_id")
     private String ruleId;
+    @Column(name = "rule_domain")
+    private String ruleDomain;
     @Column(name = "rule_namespace")
     private String ruleNamespace;
     @Column(name = "rule_condition")

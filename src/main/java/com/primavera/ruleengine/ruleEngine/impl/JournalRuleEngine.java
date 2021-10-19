@@ -1,19 +1,18 @@
 package com.primavera.ruleengine.ruleEngine.impl;
 
 import com.primavera.ruleengine.RuleMatchStrategyEnum;
-import com.primavera.ruleengine.model.AccumulatorAction;
+import com.primavera.ruleengine.model.JournalAction;
 import com.primavera.ruleengine.model.Rule;
-import com.primavera.ruleengine.model.Ubr;
 import com.primavera.ruleengine.ruleEngine.BaseRuleEngine;
 import org.springframework.stereotype.Component;
 
 @Component
-public class JournalRuleEngine<INPUT_DATA, OUTPUT_RESULT> extends BaseRuleEngine<Ubr, AccumulatorAction> {
+public class JournalRuleEngine extends BaseRuleEngine {
 
 
     @Override
-    protected AccumulatorAction initializeOutputResult(Rule rule) {
-        return null;
+    protected JournalAction initializeOutputResult(Rule rule) {
+        return JournalAction.builder().build();
     }
 
     @Override

@@ -1,6 +1,6 @@
 package com.primavera.ruleengine.ruleEngine;
 
-import com.primavera.ruleengine.RuleEngineType;
+import com.primavera.ruleengine.RuleDomain;
 import com.primavera.ruleengine.model.Rule;
 import com.primavera.ruleengine.ruleEngine.impl.AccumulatorRuleEngine;
 import com.primavera.ruleengine.ruleEngine.impl.JournalRuleEngine;
@@ -24,13 +24,13 @@ public class RuleEngineService<T,Z extends BaseRuleEngine> {
     @Autowired
     JournalRuleEngine journalRuleEngine;
 
-    public List<T> execute (RuleEngineType ruleEngineType,String ruleNamespace,T inputData) {
+    public List<T> execute (RuleDomain ruleDomain, String ruleNamespace, T inputData) {
 
-        switch (ruleEngineType) {
+        switch (ruleDomain) {
             case ACCUMULATOR:
-                return this.run(accumulatorRuleEngine,ruleNamespace,inputData);
+                return this.run(accumulatorRuleEngine,ruleDomain,ruleNamespace,inputData);
             case JOURNAL:
-                return this.run(journalRuleEngine,ruleNamespace,inputData);
+                return this.run(journalRuleEngine,ruleDomain,ruleNamespace,inputData);
             default:
                 System.out.println("bad rule engine");
                 return null;
@@ -38,9 +38,10 @@ public class RuleEngineService<T,Z extends BaseRuleEngine> {
 
     }
 
-    public List<T> run(BaseRuleEngine baseRuleEngine, String ruleNamespace, T inputData) {
-        List<Rule> allRulesByNamespace = ruleService.getAllRuleByNamespace(ruleNamespace);
-        return baseRuleEngine.run(allRulesByNamespace, baseRuleEngine.getRuleMatchStrategy(), inputData);
+    public List<T> run(BaseRuleEngine ruleEngine, RuleDomain ruleDomain,String ruleNamespace, T inputData) {
+
+        List<Rule> allRulesByNamespace = ruleService.getRulesByNamespace(ruleDomain,ruleNamespace);
+        return ruleEngine.run(allRulesByNamespace, ruleEngine.getRuleMatchStrategy(), inputData);
     }
 
 

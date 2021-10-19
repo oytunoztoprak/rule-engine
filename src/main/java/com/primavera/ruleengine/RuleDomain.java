@@ -1,6 +1,6 @@
 package com.primavera.ruleengine;
 
-public enum RuleEngineType {
+public enum RuleDomain {
     ACCUMULATOR,
     JOURNAL
 }
