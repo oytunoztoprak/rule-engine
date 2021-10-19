@@ -2,16 +2,13 @@ package com.primavera.ruleengine.ruleEngine;
 
 
 import com.primavera.ruleengine.RuleMatchStrategyEnum;
-import com.primavera.ruleengine.model.AccumulatorAction;
 import com.primavera.ruleengine.model.Rule;
 import com.primavera.ruleengine.util.parser.RuleParser;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -20,13 +17,13 @@ import java.util.stream.Collectors;
 @Slf4j
 @Component
 @Getter
-public abstract class BaseRuleEngine<INPUT_DATA, OUTPUT_RESULT> {
+public class RuleEngine<INPUT_DATA, ACTION_DATA> {
 
     @Autowired
-    private RuleParser<INPUT_DATA, OUTPUT_RESULT> ruleParser;
+    private RuleParser<INPUT_DATA, ACTION_DATA> ruleParser;
 
 
-    protected List<OUTPUT_RESULT> run(List<Rule> listOfRules, RuleMatchStrategyEnum ruleMatchStrategy, INPUT_DATA inputData,OUTPUT_RESULT outputResult) {
+    protected List<ACTION_DATA> run(List<Rule> listOfRules, RuleMatchStrategyEnum ruleMatchStrategy, INPUT_DATA inputData, ACTION_DATA actionData) {
 
 
         if (null == listOfRules || listOfRules.isEmpty()) {
@@ -38,7 +35,7 @@ public abstract class BaseRuleEngine<INPUT_DATA, OUTPUT_RESULT> {
         //STEP 2 (EXECUTE) : Run the action of the selected rule on given data and return the output.
 
         return matchedRules.stream()
-                .map(rule -> executeRule(rule, inputData,outputResult))
+                .map(rule -> executeRule(rule, inputData,actionData))
                 .collect(Collectors.toList());
     }
 
@@ -73,7 +70,7 @@ public abstract class BaseRuleEngine<INPUT_DATA, OUTPUT_RESULT> {
     }
 
 
-    protected OUTPUT_RESULT executeRule(Rule rule, INPUT_DATA inputData,OUTPUT_RESULT outputResult) {
+    protected ACTION_DATA executeRule(Rule rule, INPUT_DATA inputData, ACTION_DATA outputResult) {
         return ruleParser.parseAction(rule.getAction(), inputData,  outputResult);
     }
 
@@ -81,6 +78,6 @@ public abstract class BaseRuleEngine<INPUT_DATA, OUTPUT_RESULT> {
 
     };*/
 
-    protected abstract RuleMatchStrategyEnum getRuleMatchStrategy();
+    //protected abstract RuleMatchStrategyEnum getRuleMatchStrategy();
 
 }

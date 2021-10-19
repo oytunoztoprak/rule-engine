@@ -3,14 +3,13 @@ package com.primavera.ruleengine.util.parser;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
 
 @Slf4j
 @Component
-public class RuleParser<INPUT_DATA, OUTPUT_RESULT> {
+public class RuleParser<INPUT_DATA, ACTION_DATA> {
 
     @Autowired
     protected DSLParser dslParser;
@@ -45,16 +44,16 @@ public class RuleParser<INPUT_DATA, OUTPUT_RESULT> {
      *
      * @param expression
      * @param inputData
-     * @param outputResult
+     * @param actionData
      * @return
      */
-    public OUTPUT_RESULT parseAction(String expression, INPUT_DATA inputData, OUTPUT_RESULT outputResult) {
+    public ACTION_DATA parseAction(String expression, INPUT_DATA inputData, ACTION_DATA actionData) {
         String resolvedDslExpression = dslParser.resolveDomainSpecificKeywords(expression);
         Map<String, Object> input = new HashMap<>();
         input.put(INPUT_KEYWORD, inputData);
-        input.put(OUTPUT_KEYWORD, outputResult);
+        input.put(OUTPUT_KEYWORD, actionData);
         mvelParser.parseMvelExpression(resolvedDslExpression, input);
-        return outputResult;
+        return actionData;
     }
 
 }

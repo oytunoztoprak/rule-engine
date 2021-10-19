@@ -30,7 +30,7 @@ public class RuleEngineApplication implements CommandLineRunner {
         ubr.setRecordType("MON");
         String ruleNamespace = "ACCUMULATOR_KEY";
         AccumulatorAction accumulatorAction = new AccumulatorAction();
-        List<AccumulatorAction> results = ruleEngineService.execute(RuleDomain.ACCUMULATOR, ruleNamespace, ubr,accumulatorAction);
+        List<AccumulatorAction> results = ruleEngineService.run(RuleDomain.ACCUMULATOR, ruleNamespace, ubr,accumulatorAction);
 
 
         if (CollectionUtils.isEmpty(results)) {
