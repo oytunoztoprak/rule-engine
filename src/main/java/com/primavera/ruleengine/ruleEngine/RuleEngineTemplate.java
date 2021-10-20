@@ -22,10 +22,8 @@ public class RuleEngineTemplate {
     @Autowired
     private RuleEngine ruleEngine;
 
-    public List<Object> run(RuleDomain ruleDomain, String ruleNamespace, Object inputData, Object actionData) {
-
-        List<Rule> allRulesByNamespace = ruleService.getRulesByNamespace(ruleDomain, ruleNamespace);
-        return ruleEngine.run(allRulesByNamespace, RuleMatchStrategyEnum.MATCH_MULTIPLE_RULES, inputData, actionData);
+    public List<Object> run(List<Rule> ruleSet, RuleMatchStrategyEnum ruleMatchStrategy, Object inputData, Object actionData) {
+        return ruleEngine.run(ruleSet, ruleMatchStrategy, inputData, actionData);
 
     }
 }
