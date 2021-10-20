@@ -47,7 +47,7 @@ public class RuleParser<INPUT_DATA, ACTION_DATA> {
      * @param actionData
      * @return
      */
-    public ACTION_DATA parseAction(String expression, INPUT_DATA inputData, ACTION_DATA actionData) {
+    public Object parseAction(String expression, Object inputData, Object actionData) {
         String resolvedDslExpression = dslParser.resolveDomainSpecificKeywords(expression);
         Map<String, Object> input = new HashMap<>();
         input.put(INPUT_KEYWORD, inputData);

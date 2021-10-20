@@ -17,13 +17,13 @@ import java.util.stream.Collectors;
 @Slf4j
 @Component
 @Getter
-public class RuleEngine<INPUT_DATA, ACTION_DATA> {
+public class RuleEngine {
 
     @Autowired
-    private RuleParser<INPUT_DATA, ACTION_DATA> ruleParser;
+    private RuleParser ruleParser;
 
 
-    protected List<ACTION_DATA> run(List<Rule> listOfRules, RuleMatchStrategyEnum ruleMatchStrategy, INPUT_DATA inputData, ACTION_DATA actionData) {
+    protected List<Object> run(List<Rule> listOfRules, RuleMatchStrategyEnum ruleMatchStrategy, Object inputData, Object actionData) {
 
 
         if (null == listOfRules || listOfRules.isEmpty()) {
@@ -39,7 +39,7 @@ public class RuleEngine<INPUT_DATA, ACTION_DATA> {
                 .collect(Collectors.toList());
     }
 
-    protected List<Rule> match(List<Rule> listOfRules, INPUT_DATA inputData, RuleMatchStrategyEnum ruleMatchStrategyEnum) {
+    protected List<Rule> match(List<Rule> listOfRules, Object inputData, RuleMatchStrategyEnum ruleMatchStrategyEnum) {
 
         List<Rule> matchedRules = new ArrayList<>();
 
@@ -70,7 +70,7 @@ public class RuleEngine<INPUT_DATA, ACTION_DATA> {
     }
 
 
-    protected ACTION_DATA executeRule(Rule rule, INPUT_DATA inputData, ACTION_DATA outputResult) {
+    protected Object executeRule(Rule rule, Object inputData, Object outputResult) {
         return ruleParser.parseAction(rule.getAction(), inputData,  outputResult);
     }
 

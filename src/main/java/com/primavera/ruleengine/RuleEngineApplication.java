@@ -9,6 +9,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 @SpringBootApplication
 public class RuleEngineApplication implements CommandLineRunner {
@@ -30,7 +31,7 @@ public class RuleEngineApplication implements CommandLineRunner {
         ubr.setRecordType("MON");
         String ruleNamespace = "ACCUMULATOR_KEY";
         AccumulatorAction accumulatorAction = new AccumulatorAction();
-        List<AccumulatorAction> results = ruleEngineTemplate.run(RuleDomain.ACCUMULATOR, ruleNamespace, ubr,accumulatorAction);
+        List<Object> results = ruleEngineTemplate.run(RuleDomain.ACCUMULATOR, ruleNamespace, ubr,accumulatorAction);
 
 
         if (CollectionUtils.isEmpty(results)) {
