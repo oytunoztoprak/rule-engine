@@ -12,7 +12,7 @@ import java.util.List;
 
 @Slf4j
 @Service
-public class RuleEngineService<INPUT_DATA, ACTION_DATA> {
+public class RuleEngineTemplate<INPUT_DATA, ACTION_DATA> {
 
     @Autowired
     private RuleService ruleService;
