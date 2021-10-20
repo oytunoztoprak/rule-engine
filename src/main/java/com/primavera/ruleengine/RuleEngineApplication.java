@@ -1,27 +1,26 @@
 package com.primavera.ruleengine;
 
+import com.primavera.ruleengine.enums.RuleDomain;
+import com.primavera.ruleengine.enums.RuleMatchStrategyEnum;
 import com.primavera.ruleengine.model.AccumulatorAction;
 import com.primavera.ruleengine.model.Rule;
 import com.primavera.ruleengine.model.Ubr;
 import com.primavera.ruleengine.ruleEngine.RuleEngineTemplate;
 import com.primavera.ruleengine.service.RuleService;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
 import java.util.List;
 
+@Slf4j
 @SpringBootApplication
 public class RuleEngineApplication implements CommandLineRunner {
 
-
-    final RuleEngineTemplate ruleEngineTemplate;
-
-    public RuleEngineApplication(RuleEngineTemplate ruleEngineTemplate) {
-        this.ruleEngineTemplate = ruleEngineTemplate;
-    }
+    @Autowired
+    private RuleEngineTemplate ruleEngineTemplate;
 
     @Autowired
     private RuleService ruleService;
@@ -41,11 +40,11 @@ public class RuleEngineApplication implements CommandLineRunner {
 
 
         if (CollectionUtils.isEmpty(results)) {
-            System.out.println("Matched no rules");
+            log.info("Matched no rules");
         } else {
-            System.out.println("Matched " + results.size() + " rule(s)");
+            log.info("Matched {} rule(s)", results.size());
             results.forEach(result -> {
-                System.out.println(result.toString());
+               log.info(result.toString());
             });
 
         }

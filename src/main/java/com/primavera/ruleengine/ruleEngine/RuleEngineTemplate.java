@@ -1,23 +1,17 @@
 package com.primavera.ruleengine.ruleEngine;
 
-import com.primavera.ruleengine.RuleDomain;
-import com.primavera.ruleengine.RuleMatchStrategyEnum;
+import com.primavera.ruleengine.enums.RuleMatchStrategyEnum;
 import com.primavera.ruleengine.model.Rule;
-import com.primavera.ruleengine.service.RuleService;
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
+import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Slf4j
-@Service
+@Component
 @Builder
 public class RuleEngineTemplate {
-
-    @Autowired
-    private RuleService ruleService;
 
     @Autowired
     private RuleEngine ruleEngine;

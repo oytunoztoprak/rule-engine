@@ -1,4 +1,4 @@
-package com.primavera.ruleengine;
+package com.primavera.ruleengine.enums;
 
 public enum RuleMatchStrategyEnum {
     MATCH_SINGLE_RULE,

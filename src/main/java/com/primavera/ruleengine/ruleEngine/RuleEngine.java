@@ -1,7 +1,7 @@
 package com.primavera.ruleengine.ruleEngine;
 
 
-import com.primavera.ruleengine.RuleMatchStrategyEnum;
+import com.primavera.ruleengine.enums.RuleMatchStrategyEnum;
 import com.primavera.ruleengine.model.Rule;
 import com.primavera.ruleengine.util.parser.RuleParser;
 import lombok.Getter;
@@ -25,17 +25,17 @@ public class RuleEngine {
 
     protected List<Object> run(List<Rule> listOfRules, RuleMatchStrategyEnum ruleMatchStrategy, Object inputData, Object actionData) {
 
-
-        if (null == listOfRules || listOfRules.isEmpty()) {
-            return null;//TODO maybe return some other code
-        }
-
         //STEP 1 (MATCH) : Match the facts and data against the set of rules.
-        List<Rule> matchedRules = match(listOfRules, inputData, ruleMatchStrategy); //TODO: Make this configurable at rule
         //STEP 2 (EXECUTE) : Run the action of the selected rule on given data and return the output.
 
+        if (null == listOfRules || listOfRules.isEmpty()) {
+            return null;
+        }
+
+        List<Rule> matchedRules = match(listOfRules, inputData, ruleMatchStrategy);
+
         return matchedRules.stream()
-                .map(rule -> executeRule(rule, inputData,actionData))
+                .map(rule -> executeRule(rule, inputData, actionData))
                 .collect(Collectors.toList());
     }
 
@@ -71,13 +71,6 @@ public class RuleEngine {
 
 
     protected Object executeRule(Rule rule, Object inputData, Object outputResult) {
-        return ruleParser.parseAction(rule.getAction(), inputData,  outputResult);
+        return ruleParser.parseAction(rule.getAction(), inputData, outputResult);
     }
-
-    /*protected abstract OUTPUT_RESULT initializeOutputResult() {
-
-    };*/
-
-    //protected abstract RuleMatchStrategyEnum getRuleMatchStrategy();
-
 }

@@ -1,12 +1,11 @@
 package com.primavera.ruleengine.service;
 
-import com.primavera.ruleengine.RuleDomain;
+import com.primavera.ruleengine.enums.RuleDomain;
 import com.primavera.ruleengine.model.Rule;
 import com.primavera.ruleengine.repo.RulesRepository;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.stream.Collectors;
 

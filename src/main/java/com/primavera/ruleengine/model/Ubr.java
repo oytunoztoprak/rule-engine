@@ -1,6 +1,5 @@
 package com.primavera.ruleengine.model;
 
-import com.primavera.ruleengine.model.Account;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,7 +10,6 @@ import java.time.ZonedDateTime;
 @Setter
 public class Ubr {
 
-    private Account account;
     private String id;
     private String description;
     private String recordType;

@@ -4,7 +4,7 @@ import com.primavera.ruleengine.util.dslResolver.DSLKeywordResolver;
 import com.primavera.ruleengine.util.dslResolver.DSLResolver;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.List;
@@ -12,7 +12,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Slf4j
-@Service
+@Component
 public class DSLParser {
 
     @Autowired
