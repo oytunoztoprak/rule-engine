@@ -1,4 +1,4 @@
-package com.primavera.ruleengine.util.parser;
+package com.vodafone.billing.common.parser;
 
 import lombok.extern.slf4j.Slf4j;
 import org.mvel2.MVEL;
@@ -9,7 +9,11 @@ import java.util.Map;
 
 @Slf4j
 @Component
-public class MVELParser {
+public final class MVELParser {
+
+    private MVELParser () {
+
+    }
 
     public boolean parseMvelExpression( String expression, Map<String, Object> inputObjects){
         try {

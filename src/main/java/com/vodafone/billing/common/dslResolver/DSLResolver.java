@@ -1,4 +1,4 @@
-package com.primavera.ruleengine.util.dslResolver;
+package com.vodafone.billing.common.dslResolver;
 
 public interface DSLResolver {
     String getResolverKeyword();

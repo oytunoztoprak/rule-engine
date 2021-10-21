@@ -1,9 +1,8 @@
-package com.primavera.ruleengine.util.dslResolver;
+package com.vodafone.billing.common.dslResolver;
 
-import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Map;
@@ -12,10 +11,13 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Slf4j
-@Service
-@NoArgsConstructor
-public class DSLKeywordResolver {
+@Component
+public final class DSLKeywordResolver {
     Map<String, DSLResolver> dslKeywordResolverList;
+
+    private DSLKeywordResolver() {
+
+    }
 
     @Autowired
     public DSLKeywordResolver(List<DSLResolver> resolverList) {

@@ -1,4 +1,4 @@
-package com.primavera.ruleengine.model;
+package com.vodafone.billing.common;
 
 import lombok.Getter;
 import lombok.Setter;

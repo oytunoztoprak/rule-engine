@@ -1,10 +1,7 @@
-package com.primavera.ruleengine.ruleEngine;
+package com.vodafone.billing.common;
 
 
-import com.primavera.ruleengine.enums.RuleMatchStrategyEnum;
-import com.primavera.ruleengine.model.Rule;
-import com.primavera.ruleengine.util.parser.RuleParser;
-import lombok.Getter;
+import com.vodafone.billing.common.parser.RuleParser;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -16,12 +13,13 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Component
-@Getter
-public class RuleEngine {
+public final class RuleEngineService {
 
     @Autowired
     private RuleParser ruleParser;
 
+    private RuleEngineService() {
+    }
 
     protected List<Object> run(List<Rule> listOfRules, RuleMatchStrategyEnum ruleMatchStrategy, Object inputData, Object actionData) {
 
@@ -49,7 +47,9 @@ public class RuleEngine {
                         .filter(
                                 rule -> {
                                     String condition = rule.getCondition();
-                                    return ruleParser.parseCondition(condition, inputData);
+                                    boolean match = ruleParser.parseCondition(condition, inputData);
+                                    log.debug("INPUT_DATA: {} matched: {} to RULE_ID: {} RULE_EXPR: {} ACTION_DATA: {}", inputData.toString(), match, rule.getRuleId(), rule.getCondition(),rule.getAction());
+                                    return match;
                                 }
                         )
                         .findFirst();
@@ -59,7 +59,9 @@ public class RuleEngine {
                         .filter(
                                 rule -> {
                                     String condition = rule.getCondition();
-                                    return ruleParser.parseCondition(condition, inputData);
+                                    boolean match = ruleParser.parseCondition(condition, inputData);
+                                    log.debug("INPUT_DATA: {} matched: {} to RULE_ID: {} RULE_EXPR: {} ACTION_DATA: {}", inputData.toString(), match, rule.getRuleId(), rule.getCondition(),rule.getAction());
+                                    return match;
                                 }
                         )
                         .collect(Collectors.toList());

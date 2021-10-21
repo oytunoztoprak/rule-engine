@@ -1,16 +1,15 @@
-package com.primavera.ruleengine.util.parser;
+package com.vodafone.billing.common.parser;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
 @Slf4j
 @Component
-public class RuleParser {
+public final class RuleParser {
 
     @Autowired
     protected DSLParser dslParser;
@@ -19,6 +18,10 @@ public class RuleParser {
 
     private final String INPUT_KEYWORD = "input";
     private final String OUTPUT_KEYWORD = "output";
+
+    private RuleParser() {
+
+    }
 
     /**
      * Parsing in given priority/steps.
@@ -33,11 +36,7 @@ public class RuleParser {
         String resolvedDslExpression = dslParser.resolveDomainSpecificKeywords(expression);
         Map<String, Object> input = new HashMap<>();
         input.put(INPUT_KEYWORD, inputData);
-        boolean match = mvelParser.parseMvelExpression(resolvedDslExpression, input);
-        log.info("INPUT_DATA: {} RULE: {} MATCH_RESULT: {}", inputData.toString(), expression, match);
-
-        //TODO fix toString Isse
-        return match;
+        return mvelParser.parseMvelExpression(resolvedDslExpression, input);
     }
 
     /**

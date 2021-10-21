@@ -1,7 +1,7 @@
-package com.primavera.ruleengine.util.parser;
+package com.vodafone.billing.common.parser;
 
-import com.primavera.ruleengine.util.dslResolver.DSLKeywordResolver;
-import com.primavera.ruleengine.util.dslResolver.DSLResolver;
+import com.vodafone.billing.common.dslResolver.DSLKeywordResolver;
+import com.vodafone.billing.common.dslResolver.DSLResolver;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -13,12 +13,16 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Component
-public class DSLParser {
+public final class DSLParser {
 
     @Autowired
     private DSLKeywordResolver keywordResolver;
     @Autowired
     private DSLPatternUtil dslPatternUtil;
+
+    private DSLParser () {
+
+    }
 
     public String resolveDomainSpecificKeywords(String expression){
         Map<String, Object> dslKeywordToResolverValueMap = executeDSLResolver(expression);

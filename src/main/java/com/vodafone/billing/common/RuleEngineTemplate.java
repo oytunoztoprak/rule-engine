@@ -1,8 +1,5 @@
-package com.primavera.ruleengine.ruleEngine;
+package com.vodafone.billing.common;
 
-import com.primavera.ruleengine.enums.RuleMatchStrategyEnum;
-import com.primavera.ruleengine.model.Rule;
-import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -10,14 +7,12 @@ import java.util.List;
 
 @Slf4j
 @Component
-@Builder
-public class RuleEngineTemplate {
+public final class RuleEngineTemplate {
 
     @Autowired
-    private RuleEngine ruleEngine;
+    private RuleEngineService ruleEngineService;
 
     public List<Object> run(List<Rule> ruleSet, RuleMatchStrategyEnum ruleMatchStrategy, Object inputData, Object actionData) {
-        return ruleEngine.run(ruleSet, ruleMatchStrategy, inputData, actionData);
-
+        return ruleEngineService.run(ruleSet, ruleMatchStrategy, inputData, actionData);
     }
 }
